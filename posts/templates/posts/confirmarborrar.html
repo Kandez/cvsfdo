@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}{{post.titulo}}{% endblock %}
+
+{% block content %}
+    <br>
+    <section class="page-section cta">
+      <div class="container">
+        <div class="card">
+            <div class="row mt-3">
+                <div class="col-md-9 mx-auto">
+                    <div>
+                        <form action="" method="post">{% csrf_token %}
+                            <p>¿Estas seguro? Vas a borrar <b>"{{ object }}"</b></p>
+                            <input type="submit" class="btn btn-primary btn-block" value="Si" />
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+    </section>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}{{club.nombre}}{% endblock %}
+
+{% block content %}
+    <br>
+    <section class="page-section cta">
+      <div class="container">
+        <div class="card">
+            {% if club.imagen %}
+                <img class="card-img-top" style="width: 50%; display:block; margin:auto;" src="{{club.imagen.url}}" alt="Card image cap">
+            {% endif %}
+            <div class="card-body">
+                <h5 class="card-title text-center" id="rojo">{{club.nombre}}</h5>
+                <p class="card-text">{{club.descripcion}}</p>
+                <p class="card-text">{{club.fundado}}</p>
+                <br>
+                {% if request.user.is_superuser %}
+                <div>
+                    <a href="{% url 'temporada:editarclub' club.id %}" style="margin: 0 auto;" class="btn btn-success">Editar</a>
+                    <a href="{% url 'temporada:borrarclub' club.id %}" class="btn btn-danger float-right">Borrar</a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+      </div>
+    </section>
+    <script>
+        document.getElementById("rojo").onmouseover = function() {mouseOver()};
+        document.getElementById("rojo").onmouseout = function() {mouseOut()};
+        function mouseOver() {
+            document.getElementById("rojo").style.color = "red";
+        }
+        function mouseOut() {
+            document.getElementById("rojo").style.color = "black";
+        }
+    </script>
+{% endblock %}

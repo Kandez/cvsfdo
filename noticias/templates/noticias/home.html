@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Noticias{% endblock %}
+
+{% block content %}
+{% if request.user.is_superuser %}
+    <div class="container-fluid">
+        <h1 class="text-center"> Noticias </h1>
+        <a class="btn btn-danger" href="{% url 'noticias:nuevanoticia' %}">Crear noticia</a>
+    </div>
+    <br>
+    <section class="page-section cta">
+        <div class="container">
+            <ul class="list-group">
+                {% for noticia in noticia_list%}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <h4>{{noticia.titulo}}</h4>
+                            <br>
+                            {% if noticia.imagen %}
+                                <img class="card-img-top" style="width: 50%; display:block; margin:auto;" src="{{noticia.imagen.url}}" alt="Card image cap">
+                            {% endif %}
+                            <br><br>
+                            <p>{{noticia.contenido}}</p>
+                            <br><br><br>
+                                <p><a class=" btn btn-success" href="{% url 'noticias:noticia' noticia.id noticia.titulo|slugify %}">Leer más</a>
+                                    <a class=" btn btn-warning" href="{% url 'noticias:editarnoticia' noticia.id %}">Editar</a>
+                                    <a class=" btn btn-danger" href="{% url 'noticias:borrarnoticia' noticia.id %}">Borrar</a>
+                                </p>                           
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </section>
+{% else %}
+    <h1> Noticias </h1>
+    <br>
+    <section class="page-section cta">
+        <div class="container">
+            <ul class="list-group">
+                {% for noticia in noticia_list%}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <h4>{{noticia.titulo}}</h4>
+                            <br>
+                            {% if noticia.imagen %}
+                                <img class="card-img-top" style="width: 50%; display:block; margin:auto;" src="{{noticia.imagen.url}}" alt="Card image cap">
+                            {% endif %}  
+                            <br><br>
+                            <p>{{noticia.contenido}}</p>
+                            <br><br><br>
+                            <p><a class="btn btn-success" href="{% url 'noticias:noticia' noticia.id noticia.titulo|slugify %}">Leer más</a></p>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </section>
+{% endif %}
+{% endblock %}

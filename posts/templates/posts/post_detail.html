@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}{{post.titulo}}{% endblock %}
+
+{% block content %}
+    <br>
+    <section class="page-section cta">
+      <div class="container">
+        <div class="card">
+            <h5 class="card-title text-center">{{post.titulo}}</h5>
+            <br><br>
+            {% if post.imagen %}
+                <img class="card-img-top" style="width: 50%; display:block; margin:auto;" src="{{post.imagen.url}}" alt="Card image cap">
+            {% endif %}
+            <div class="card-body">
+                <p class="card-text">{{post.descripcion}}</p>
+                <br>
+                {% if post.archivo %}
+                    <a href={{post.archivo.url}}>Archivo adjunto</a>
+                {% endif %}
+                <br><br>
+                <h4><strong>Respuestas</strong></h4>
+                {% for rep in post.repply_set.all%}
+                    <p>Respuesta de {{rep.usuario}}:  {{rep.contenido}}</p>
+                {% endfor %}
+                <a class=" btn btn-success" href="{% url 'post:crearrepply' post.id %}">Contestar</a>
+                <br><br>
+                {% if request.user.is_superuser %}
+                <div>
+                    <a href="{% url 'post:editarpost' post.id %}" style="margin: 0 auto;" class="btn btn-success">Editar</a>
+                    <a href="{% url 'post:borrarpost' post.id %}" class="btn btn-danger float-right">Borrar</a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+      </div>
+    </section>
+{% endblock %}

@@ -1,0 +1,71 @@
+{% extends 'base.html'%}
+{% load static %}
+{% block content %}
+{% if request.user.is_superuser %}
+    <div class="container-fluid">
+        <h1 class="text-center"> Posts </h1>
+        <a class="btn btn-danger" href="{% url 'post:crearpost' %}">Crear post</a>
+    </div>
+    <br>
+    <section class="page-section cta">
+        <div class="container">
+            <ul class="list-group">
+                {% for post in post_list%}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <h4 class="text-center">{{post.titulo}}</h4>
+                            <br>
+                            {% if post.imagen %}
+                                <img class="card-img-top" style="width: 50%; display:block; margin:auto;" src="{{post.imagen.url}}" alt="Card image cap">
+                            {% endif %}
+                            <br><br>
+                            <p>{{post.descripcion}}</p>
+                            <br>
+                            {% if post.archivo %}
+                                <a href={{post.archivo.url}}>Archivo adjunto</a>
+                            {% endif %}
+                            <br><br><br>
+                                <p><a class=" btn btn-success" href="{% url 'post:post' post.id post.titulo|slugify %}">Leer más</a>
+                                    <a class=" btn btn-warning" href="{% url 'post:editarpost' post.id %}">Editar</a>
+                                    <a class=" btn btn-danger" href="{% url 'post:borrarpost' post.id %}">Borrar</a>
+                                </p>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </section>
+{% else %}
+    <div class="container-fluid">
+        <h1 class="text-center"> Posts </h1>
+        <a class="btn btn-danger" href="{% url 'post:crearpost' %}">Crear post</a>
+    </div>
+    <br>
+    <section class="page-section cta">
+        <div class="container">
+            <ul class="list-group">
+                {% for post in post_list %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <h4>{{post.titulo}}</h4>
+                            <br>
+                            {% if post.imagen %}
+                                <img class="card-img-top" style="width: 50%; display:block; margin:auto;" src="{{post.imagen.url}}" alt="Card image cap">
+                            {% endif %}
+                            <br><br>
+                            <p>{{post.descripcion}}</p>
+                            <br>
+                            {% if post.archivo %}
+                                <a href={{post.archivo.url}}>Archivo adjunto</a>
+                            {% endif %}
+                            <br><br><br>
+                            <p><a class="btn btn-success" href="{% url 'post:post' post.id post.titulo|slugify %}">Leer más</a>
+                            </p>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </section>
+{% endif %}
+{% endblock %}

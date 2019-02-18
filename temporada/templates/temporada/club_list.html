@@ -1,0 +1,58 @@
+{% extends 'base.html'%}
+{% load static %}
+{% block content %}
+{% if request.user.is_superuser %}
+    <div class="container-fluid">
+        <h1 class="text-center"> Clubs </h1>
+        <a class="btn btn-danger" href="{% url 'temporada:crearclub' %}">Crear club</a>
+    </div>
+    <br>
+    <section class="page-section cta">
+        <div class="container">
+            <ul class="list-group">
+                {% for club in club_list%}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <h4 class="text-center">{{club.nombre}}</h4>
+                            <br>
+                            {% if club.imagen %}
+                                <img class="card-img-top" style="width: 50%; display:block; margin:auto;" src="{{club.imagen.url}}" alt="Card image cap">
+                            {% endif %}
+                            <br><br>
+                            <p>{{club.descripcion}}</p>
+                            <br><br><br>
+                                <p><a class=" btn btn-success" href="{% url 'temporada:club' club.id club.nombre|slugify %}">Leer más</a>
+                                    <a class=" btn btn-warning" href="{% url 'temporada:editarclub' club.id %}">Editar</a>
+                                    <a class=" btn btn-danger" href="{% url 'temporada:borrarclub' club.id %}">Borrar</a>
+                                </p>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </section>
+{% else %}
+    <br>
+    <section class="page-section cta">
+        <div class="container">
+            <ul class="list-group">
+                {% for club in club_list %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <h4>{{club.nombre}}</h4>
+                            <br>
+                            {% if club.imagen %}
+                                <img onmouseover="bigImg(this)" onmouseout="normalImg(this)" class="card-img-top" style="width: 50%; display:block; margin:auto;" src="{{club.imagen.url}}" alt="Card image cap">
+                            {% endif %}
+                            <br><br>
+                            <p>{{club.descripcion}}</p>
+                            <br><br><br>
+                            <p><a class="btn btn-success" href="{% url 'temporada:club' club.id club.nombre|slugify %}">Leer más</a></p>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </section>
+{% endif %}
+{% endblock %}

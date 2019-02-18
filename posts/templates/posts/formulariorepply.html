@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Crear respuesta{% endblock %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <br>
+    <section class="page-section cta">
+      <div class="container">
+        <div class="row mt-3 mb-5">
+            <div class="col-md-9 mx-auto">
+              <form action="" method="post" enctype="multipart/form-data">
+              {% csrf_token %}
+                  {{ form|crispy }}  
+                <div class="text-center">
+                  <input type="submit" class="btn btn-primary btn-block" value="Crear respuesta" onclick="alert(getConfirmacion())" />
+                </div>
+              </form>
+            </div>
+          </div>
+      </div>
+    </section>
+    <script>
+      function getConfirmacion(){
+        var confirmacion="¡Respuesta creada correctamente!";
+        return confirmacion;
+      }
+    </script>
+{% endblock %}

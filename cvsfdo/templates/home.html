@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container-fluid">
+  <h1 class="text-center">Club Voleibol San Fernando</h1>
+  <img class="card-img-top" style="display:block; margin:auto;" src="static/cvsfdo/img/sanfernando.png" alt="Card image cap">
+  <h5 class="text-center">Bienvenido a la pagina del CV San Fernando, {% if user.is_authenticated %}{{ user.username }}{% else %}visitante{% endif %}!</h5>
+  <button class="btn btn-success" onclick="this.innerHTML=Date()">Mostrar hora</button>
+  <br><br>
+</div>
+{% endblock %}
